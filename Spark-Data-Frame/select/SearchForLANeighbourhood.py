@@ -1,7 +1,7 @@
 # Import your libraries
 from pyspark.sql.functions import *
-from pyspark.sql.types  import *
-airbnb_search_details= StructType(
+from pyspark.sql.types import *
+airbnb_search_details = StructType(
     [
 
 
