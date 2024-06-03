@@ -1,0 +1,20 @@
+WITH CTE AS(
+    SELECT
+        CONVERT(VARCHAR(7), ORDER_DATE, 120) AS SALES_MONTH,
+        SUM(ORDER_VALUE) AS TOTAL_SALES,
+        RANK() OVER(
+            ORDER BY
+                SUM(ORDER_VALUE) DESC
+        ) AS RNK
+    FROM
+        fct_customer_sales
+    GROUP BY
+        CONVERT(VARCHAR(7), ORDER_DATE, 120)
+)
+SELECT
+    SALES_MONTH,
+    TOTAL_SALES
+FROM
+    CTE
+WHERE
+    RNK < 4;

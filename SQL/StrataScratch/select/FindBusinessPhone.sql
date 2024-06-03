@@ -1,0 +1,3 @@
+select distinct business_name
+from sf_restaurant_health_violations
+where business_phone_number is Not Null;

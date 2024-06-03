@@ -1,0 +1,24 @@
+WITH CTE AS(
+    SELECT
+        DEPARTMENT,
+        FIRST_NAME AS EMPLOYEE_NAME,
+        SALARY,
+        RANK() OVER(
+            PARTITION BY DEPARTMENT
+            ORDER BY
+                SALARY DESC
+        ) AS RNK
+    FROM
+        EMPLOYEE
+)
+SELECT
+    DEPARTMENT,
+    EMPLOYEE_NAME,
+    SALARY
+FROM
+    CTE
+WHERE
+    RNK = 1
+ORDER BY
+    SALARY DESC,
+    EMPLOYEE_NAME

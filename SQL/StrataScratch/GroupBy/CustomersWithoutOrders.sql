@@ -1,0 +1,18 @@
+WITH CTE AS (
+    SELECT
+        C.FIRST_NAME,
+        C.LAST_NAME,
+        O.ORDER_DATE,
+        O.ORDER_DETAILS
+    FROM
+        CUSTOMERS C
+        LEFT JOIN ORDERS AS O ON C.ID = O.CUST_ID
+    WHERE
+        O.ID IS NULL
+)
+SELECT
+    DISTINCT FIRST_NAME
+FROM
+    CTE
+ORDER BY
+    FIRST_NAME;
