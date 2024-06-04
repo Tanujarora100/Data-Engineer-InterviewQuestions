@@ -1,6 +1,6 @@
+# Import your libraries
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
-from pyspark.sql.window import *
 
 # Start writing code
 yelp_business = StructType(
@@ -11,17 +11,16 @@ yelp_business = StructType(
         StructField("city", StringType(), True),
         StructField("state", StringType(), True),
         StructField("postal_code", StringType(), True),
-        StructField("latitude", DoubleType(), True),
-        StructField("longitude", DoubleType(), True),
-        StructField("stars", DoubleType(), True),
+        StructField("is_open", IntegerType(), True),
+        StructField("latitude", FloatType(), True),
+        StructField("longitude", FloatType(), True),
+        StructField("stars", FloatType(), True),
         StructField("review_count", IntegerType(), True),
         StructField("is_open", IntegerType(), True),
         StructField("attributes", StringType(), True),
         StructField("categories", StringType(), True),
         StructField("hours", StringType(), True),
         StructField("is_open", IntegerType(), True),
-        StructField("attributes", StringType(), True),
-        StructField("categories", StringType(), True),
     ]
 )
 df = yelp_business

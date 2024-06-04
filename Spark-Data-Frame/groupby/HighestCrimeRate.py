@@ -13,7 +13,6 @@ sf_crime_incidents_2014_01=StructType([
     StructField('x',StringType,True),
     StructField('y',StringType,True),
 
-
 ])
 df=sf_crime_incidents_2014_01
 grouped_df= df.groupBy('day_of_week').agg(count(col('incidnt_num')).alias('total'))
