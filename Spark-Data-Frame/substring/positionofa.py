@@ -1,20 +1,22 @@
 from pyspark.sql.functions import *
-from pyspark.sql.types import StructType, StructField, IntegerType, StringType, DateType
-from pyspark.sql.window import Window
+from pyspark.sql.types import StructField, StructType, IntegerType, StringType
 
 worker = StructType(
     [
-        StructField("worker_id", IntegerType(), True),
         StructField("first_name", StringType(), True),
         StructField("last_name", StringType(), True),
         StructField("worker_title", StringType(), True),
         StructField("salary", IntegerType(), True),
-        StructField("joining_date", DateType(), True),
+        StructField("joining_date", StringType(), True),
         StructField("department", StringType(), True),
     ]
 )
-worker = worker.withColumn("rnk", row_number().over(Window.orderBy(desc("worker_id"))))
-worker = worker.filter(col("rnk") == 1).drop("rnk")
-# worker.show()
+df = worker
+df = (
+    df.filter(col("first_name") == "Amitah")
+    .select(instr(col("first_name"), "a").alias("results"))
+    .toPandas()
+)
+
 # To validate your solution, convert your final pySpark df to a pandas df
-worker.toPandas()
+# worker.toPandas()
