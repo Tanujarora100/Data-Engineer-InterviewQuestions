@@ -1,0 +1,25 @@
+# Write your MySQL query statement below
+WITH CTE AS (
+    SELECT
+        S.STUDENT_ID,
+        S.STUDENT_NAME,
+        E.SCORE,    
+        MIN(E.SCORE) OVER() AS MIN_SCORE,
+        MAX(E.SCORE) OVER() AS MAX_SCORE
+    FROM
+        STUDENT AS S
+        INNER JOIN EXAM AS E ON S.STUDENT_ID = E.STUDENT_ID
+),
+FLAGGED_USERS AS(
+    SELECT
+        STUDENT_ID,
+        STUDENT_NAME,
+        CASE WHEN SCORE = MIN_SCORE THEN 'Y' ELSE 'N' END AS MINIMUM_SCORE,
+        CASE WHEN SCORE = MAX_SCORE THEN 'Y' ELSE 'N' END AS MAXIMUM_SCORE
+    FROM
+        CTE
+)
+SELECT
+    *
+FROM
+    FLAGGED_USERS
