@@ -1,0 +1,33 @@
+WITH CTE AS (
+    SELECT
+        USER_ID,
+        TRANSACTION_DATE,
+        SPEND,
+        LAG(SPEND, 1) OVER (
+            PARTITION BY USER_ID
+            ORDER BY
+                TRANSACTION_DATE
+        ) AS PREV_SPEND_1,
+        LAG(SPEND, 2) OVER (
+            PARTITION BY USER_ID
+            ORDER BY
+                TRANSACTION_DATE
+        ) AS PREV_SPEND_2,
+        ROW_NUMBER() OVER(
+            PARTITION BY USER_ID
+            ORDER BY
+                TRANSACTION_DATE
+        ) AS RNK
+    FROM
+        TRANSACTIONS
+)
+SELECT
+    USER_ID,
+    SPEND AS THIRD_TRANSACTION_SPEND,
+    TRANSACTION_DATE AS THIRD_TRANSACTION_DATE
+FROM
+    CTE
+WHERE
+    SPEND > PREV_SPEND_1
+    AND SPEND > PREV_SPEND_2
+    AND RNK = 3
