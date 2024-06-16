@@ -1,0 +1,22 @@
+WITH CTE AS(
+    SELECT
+        *,
+        COUNT(EMPLOYEE_ID) OVER(PARTITION BY SALARY) AS TOTAL_MEMBERS
+    FROM
+        Employees
+)
+SELECT
+    EMPLOYEE_ID,
+    NAME,
+    SALARY,
+    DENSE_RANK() OVER(
+        ORDER BY
+            SALARY
+    ) AS TEAM_ID
+FROM
+    CTE
+WHERE
+    TOTAL_MEMBERS <> 1
+ORDER BY
+    TEAM_ID,
+    EMPLOYEE_ID

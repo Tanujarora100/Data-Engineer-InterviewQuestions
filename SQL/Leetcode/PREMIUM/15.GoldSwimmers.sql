@@ -1,0 +1,21 @@
+SELECT
+    UPPER(GOLD) AS GOLD_PLAYER_NAME,
+    COUNT(1) AS TOTAL_MEDALS
+FROM
+    EVENTS
+WHERE
+    GOLD NOT IN (
+        SELECT
+            SILVER AS SILVER_PLAYER_NAME
+        FROM
+            EVENTS
+        UNION
+        SELECT
+            BRONZE AS BRONZE_PLAYER_NAME
+        FROM
+            EVENTS
+    )
+GROUP BY
+    GOLD
+ORDER BY
+    TOTAL_MEDALS DESC;
