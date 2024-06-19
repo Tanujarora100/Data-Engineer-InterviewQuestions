@@ -1,6 +1,13 @@
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
+from pyspark.sql import SparkSession
+import findspark
+findspark.init('/opt/homebrew/Cellar/apache-spark/3.5.1/libexec')
 
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("Restaurant Database").getOrCreate()
+spark = SparkSession.builder.appName("Restaurant Database").getOrCreate()
 customers = StructType([
     StructField('id', IntegerType(), True),
     StructField('first_name', StringType(), True),

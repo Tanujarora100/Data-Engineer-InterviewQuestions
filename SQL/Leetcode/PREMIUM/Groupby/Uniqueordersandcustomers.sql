@@ -1,0 +1,17 @@
+SELECT
+    DATE_FORMAT(ORDER_DATE, '%Y-%m') AS MONTH,
+    COUNT(ORDER_ID) AS ORDER_COUNT,
+    COUNT(DISTINCT CUSTOMER_ID) AS CUSTOMER_COUNT
+FROM
+    (
+        SELECT
+            *
+        FROM
+            ORDERS
+        WHERE
+            INVOICE > 20
+    ) AS SUB_QUERY
+GROUP BY
+    DATE_FORMAT(ORDER_DATE, '%Y-%m')
+ORDER BY
+    MONTH

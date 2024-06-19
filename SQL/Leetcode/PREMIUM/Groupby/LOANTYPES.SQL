@@ -1,0 +1,15 @@
+SELECT
+    USER_ID
+FROM
+    LOANS
+GROUP BY
+    USER_ID
+HAVING
+    SUM(
+        CASE WHEN LOAN_TYPE = 'Mortgage' THEN 1 ELSE 0 END
+    ) <> 0
+    AND SUM(
+        CASE WHEN LOAN_TYPE = 'Refinance' THEN 1 ELSE 0 END
+    ) <> 0
+ORDER BY
+    USER_ID
