@@ -1,0 +1,51 @@
+SELECT
+    I.ITEM_CATEGORY AS CATEGORY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 1 THEN O.QUANTITY END
+        ),
+        0
+    ) AS MONDAY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 2 THEN O.QUANTITY END
+        ),
+        0
+    ) AS TUESDAY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 3 THEN O.QUANTITY END
+        ),
+        0
+    ) AS WEDNESDAY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 4 THEN O.QUANTITY END
+        ),
+        0
+    ) AS THURSDAY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 5 THEN O.QUANTITY END
+        ),
+        0
+    ) AS FRIDAY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 6 THEN O.QUANTITY END
+        ),
+        0
+    ) AS SATURDAY,
+    COALESCE(
+        SUM(
+            CASE WHEN EXTRACT(DOW FROM O.ORDER_DATE) = 0 THEN O.QUANTITY END
+        ),
+        0
+    ) AS SUNDAY
+FROM
+    ITEMS AS I
+    LEFT JOIN ORDERS AS O ON O.ITEM_ID = I.ITEM_ID
+GROUP BY
+    CATEGORY
+ORDER BY
+    CATEGORY;

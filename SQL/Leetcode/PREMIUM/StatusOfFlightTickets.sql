@@ -1,0 +1,19 @@
+WITH CTE AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER(
+            PARTITION BY P.FLIGHT_ID
+            ORDER BY
+                P.BOOKING_TIME ASC
+        ) AS FIRST_BOOKING
+    FROM
+        PASSENGERS AS P
+        LEFT JOIN FLIGHTS AS F ON P.FLIGHT_ID = F.FLIGHT_ID
+)
+SELECT
+    PASSENGER_ID,
+    CASE WHEN FIRST_BOOKING > CAPACITY THEN 'Waitlist' ELSE 'Confirmed' END AS Status
+FROM
+    CTE
+ORDER BY
+    PASSENGER_ID ASC
